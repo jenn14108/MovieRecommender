@@ -1,0 +1,19 @@
+.searchBar {
+  padding-top:10px;
+}
+
+/*styles the actual input from the user */
+input {
+  height: 40px;
+  width: 400px;
+  font-size:20px;
+  color: green;
+  opacity: 0.6;
+}
+
+/* styles the placeholder text */
+::placeholder {
+  font-size: 20px;
+  color: green;
+  opacity: 0.6;
+}
