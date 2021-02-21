@@ -9,48 +9,59 @@ class SearchBar extends Component {
 
   constructor(props){
     super(props);
-    this.state = {movie: "", movieResults: []};
-    this.handleChange = this.handleChange.bind(this);
-    this.checkKeyPressForSubmission = this.checkKeyPressForSubmission.bind(this);
+    this.state = {movie: '', movieResult: []};
+    this.keyPress = this.keyPress.bind(this);
     this.retrieveMovie = this.retrieveMovie.bind(this);
   }
 
-  //handles the update of the value typed into the search bar
-  handleChange = e => {
-    this.setState({movie: e.target.value});
-    console.log("input has changed: " + e);
-  };
 
-  checkKeyPressForSubmission(pressedButton) {
+
+  keyPress(e) {
     // 13 = identifier for the enter key
-    if (pressedButton.keyCode == 13) {
-      console.log("enter was pressed!");
+    if (e.key === 'Enter') {
+      console.log("enter was pressed! Saving user input: " + e.target.value);
+      // setState is async, need call back for logging
+      this.setState({
+        movie:e.target.value
+      }, function() {
+        console.log("User input saved! Current movie title searched for: " + this.state.movie);
+        this.retrieveMovie();
+      })
     }
   };
 
   //this is where we connect react to django backend
-  retrieveMovie = e => {
-    e.preventDefault();
-    axios.get('http://localhost:8000/api/movies/', this.state)
-    .then((response =>
-      this.setState({movieResults: response.data}),
-      console.log("movieResults", this.movieResults)))
+  retrieveMovie() {
+    console.log("getting ready to make a call to the backend...")
+    const params = new URLSearchParams({
+      title: this.state.movie
+    }).toString();
+    const url = 'http://localhost:8000/api/movies/' + params;
+    axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json'
+      }})
+    .then((response => {
+      const movie = response.data;
+      this.setState({
+        movieResult: movie
+      }, function() {
+        console.log("http call movie result: ", this.state.movieResult);
+      });
+    }))
     .catch(error => {
-      console.log("there was an error retrieving the movie requested for!" + e);
+      console.log("there was an error retrieving the movie requested!");
     });
   }
 
   render() {
     return(
       <div className='searchBar'>
-        <Form onSubmit={this.retrieveMovie}>
-          <input
-            name="movie"
-            movie = {this.state.movie}
-            onKeyPress={this.checkKeyPressForSubmission}
-            placeholder='eg. Kubo and the Two Strings'
-            />
-        </Form>
+        <input
+          name="movie"
+          onKeyDown={this.keyPress}
+          placeholder='eg. Kubo and the Two Strings'
+          />
       </div>
     )
   }
