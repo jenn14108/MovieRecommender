@@ -2,16 +2,9 @@
   text-align: center;
 }
 
-.App-logo {
-  /* animation: App-logo-spin infinite 20s linear; */
-  height: 60px;
-  display:inline;
-}
-
 .App-header {
   background-color: #80d1ae;
-  height: 120px;
-  padding-top:20px;
+  height: 80px;
   color: white;
 }
 

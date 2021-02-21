@@ -11,7 +11,7 @@ class SearchBar extends Component {
     return(
       <div className='searchBar'>
         <input
-          placeholder='eg. kubo and the two strings'
+          placeholder='eg. Kubo and the Two Strings'
         />
       </div>
     )

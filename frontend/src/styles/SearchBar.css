@@ -7,13 +7,13 @@ input {
   height: 40px;
   width: 400px;
   font-size:20px;
-  color: green;
-  opacity: 0.6;
+  color: #73c78a;
+  opacity: 0.7;
 }
 
 /* styles the placeholder text */
 ::placeholder {
   font-size: 20px;
-  color: green;
-  opacity: 0.6;
+  color: #73c78a;
+  opacity: 0.7;
 }
