@@ -32,12 +32,14 @@ class SearchBar extends Component {
 
   //this is where we connect react to django backend
   retrieveMovie() {
-    console.log("getting ready to make a call to the backend...")
-    const params = new URLSearchParams({
-      title: this.state.movie
-    }).toString();
-    const url = 'http://localhost:8000/api/movies/' + params;
-    axios.get(url, {
+    console.log("getting ready to make a call to the backend for movie title = ", this.state.movie);
+    const url = 'http://localhost:8000/api/movies/title';
+    axios.get(
+      url, {
+        params: {
+          title: this.state.movie
+        }
+      }, {
       headers: {
         'Content-Type': 'application/json'
       }})

@@ -19,22 +19,9 @@ class MovieView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filter_fields = ['title', 'id']
 
-
-    # temporary method to test frontend-to-backend connectivity using axios
-    # def getMovie(self, request):
-    #     logger.info("This is the request: " + request)
-    #     if request.method == "GET":
-    #         requestedMovieTitle = request.GET.get('movie')
-    #         movie = queryset.get(title=requestedMovieTitle)
-    #         serializer = MovieSerializer(movie, context={'request': request}, many=false)
-    #     return Response(serializer.data)
-
-
     def retrieve(self, request, *args, **kwargs):
-        print('HI!')
-        print(request.query_params)
-        #movie = Movie.objects.all().filter(title=request.GET.get('title',''))
-        movie = Movie.objects.all().filter(title='Klaus')
+        print('query parameters: ', request.query_params)
+        movie = Movie.objects.all().filter(title=request.GET.get('title',''))
         serializer = MovieSerializer(movie, many=True)
         jsonResponse = JsonResponse(serializer.data, safe=False)
         jsonResponse['Access-Control-Allow-Origin'] = '*'
