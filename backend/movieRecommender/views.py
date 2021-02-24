@@ -25,5 +25,4 @@ class MovieView(viewsets.ModelViewSet):
         serializer = MovieSerializer(movie, many=True)
         jsonResponse = JsonResponse(serializer.data, safe=False)
         jsonResponse['Access-Control-Allow-Origin'] = '*'
-        print(jsonResponse)
         return jsonResponse

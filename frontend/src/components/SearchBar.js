@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import { Button, Form, Input, } from "reactstrap";
 import FontAwesome from '@fortawesome/react-fontawesome';
 import '../styles/Global.css';
-import '../styles/SearchBar.css'
+import '../styles/SearchBar.css';
 import axios from "axios";
 
 class SearchBar extends Component {
 
   constructor(props){
     super(props);
-    this.state = {movie: '', movieResult: []};
+    this.state = {
+      movie: '',
+    };
     this.keyPress = this.keyPress.bind(this);
     this.retrieveMovie = this.retrieveMovie.bind(this);
+    this.setSearchResult = this.setSearchResult.bind(this);
   }
-
-
 
   keyPress(e) {
     // 13 = identifier for the enter key
@@ -31,7 +32,7 @@ class SearchBar extends Component {
   };
 
   //this is where we connect react to django backend
-  retrieveMovie() {
+ retrieveMovie() {
     console.log("getting ready to make a call to the backend for movie title = ", this.state.movie);
     const url = 'http://localhost:8000/api/movies/title';
     axios.get(
@@ -45,15 +46,16 @@ class SearchBar extends Component {
       }})
     .then((response => {
       const movie = response.data;
-      this.setState({
-        movieResult: movie
-      }, function() {
-        console.log("http call movie result: ", this.state.movieResult);
-      });
+      console.log("this is the retrieved movie data: ", movie);
+      this.setSearchResult(movie);
     }))
     .catch(error => {
-      console.log("there was an error retrieving the movie requested!");
+      console.log("there was an error retrieving the movie requested!", error);
     });
+  }
+
+  setSearchResult(movieResults) {
+    this.props.onSearch(movieResults);
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
+import SearchBarDisplayContainer from '../components/SearchBarDisplayContainer';
 import '../styles/Global.css';
 
 
@@ -12,7 +12,7 @@ class MainPage extends Component {
       <div className='MainPage'>
         <Header />
         <body> Enter the name of a movie for a list of recommendations: </body>
-        <SearchBar />
+        <SearchBarDisplayContainer />
       </div>
     )
   }
