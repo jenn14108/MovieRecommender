@@ -18,7 +18,6 @@ class SearchBar extends Component {
   }
 
   keyPress(e) {
-    // 13 = identifier for the enter key
     if (e.key === 'Enter') {
       console.log("enter was pressed! Saving user input: " + e.target.value);
       // setState is async, need call back for logging
